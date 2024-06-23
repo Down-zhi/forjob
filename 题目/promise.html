@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><script>
+    //all 中所有异步操作结束后才执行回调。
+    function p1() {
+  var promise1 = new Promise(function (resolve, reject) {
+    console.log("p1的第一条输出语句");
+    resolve("p1完成");
+  });
+  return promise1;
+}
+
+function p2() {
+  var promise2 = new Promise(function (resolve, reject) {
+    console.log("p2的第一条输出语句");
+    setTimeout(() => {
+      console.log("p2的第二条输出语句");
+      resolve("p2完成");
+    }, 2000);
+  });
+  return promise2;
+}
+
+function p3() {
+  var promise3 = new Promise(function (resolve, reject) {
+    console.log("p3的第一条输出语句");
+    resolve("p3完成");
+  });
+  return promise3;
+}
+
+Promise.all([p1(), p2(), p3()]).then(function (data) {
+  console.log(data);
+});
+
+
+class MyPromise {
+  constructor(executor) {
+    this.state = 'pending'; // 初始状态为pending
+    this.value = undefined; // 成功的值
+    this.reason = undefined; // 失败的原因
+    this.onFulfilledCallbacks = []; // 存储成功的回调
+    this.onRejectedCallbacks = []; // 存储失败的回调
+
+    // 将resolve和reject包装在try-catch中，以便捕获内部抛出的错误
+    try {
+      executor(this.resolve.bind(this), this.reject.bind(this));
+    } catch (error) {
+      this.reject(error);
+    }
+  }
+
+  resolve(value) {
+    if (this.state === 'pending') {
+      this.state = 'fulfilled';
+      this.value = value;
+      // 当状态变为fulfilled时，执行所有成功的回调
+      this.onFulfilledCallbacks.forEach(fn => fn());
+    }
+  }
+
+  reject(reason) {
+    if (this.state === 'pending') {
+      this.state = 'rejected';
+      this.reason = reason;
+      // 当状态变为rejected时，执行所有失败的回调
+      this.onRejectedCallbacks.forEach(fn => fn());
+    }
+  }
+
+  then(onFulfilled, onRejected) {
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
+    onRejected = typeof onRejected === 'function' ? onRejected : reason => { throw reason };
+
+    let promise2 = new MyPromise((resolve, reject) => {
+      // 异步执行，确保在当前事件循环结束后再执行回调
+      setTimeout(() => {
+        if (this.state === 'fulfilled') {
+          try {
+            let x = onFulfilled(this.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e);
+          }
+        } else if (this.state === 'rejected') {
+          try {
+            let x = onRejected(this.reason);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e);
+          }
+        } else {
+          // pending状态，将回调存储起来
+          this.onFulfilledCallbacks.push(() => {
+            try {
+              let x = onFulfilled(this.value);
+              resolvePromise(promise2, x, resolve, reject);
+            } catch (e) {
+              reject(e);
+            }
+          });
+          this.onRejectedCallbacks.push(() => {
+            try {
+              let x = onRejected(this.reason);
+              resolvePromise(promise2, x, resolve, reject);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+      });
+    });
+
+    return promise2;
+  }
+}
+
+// 解决Promise的链式调用中返回值的处理问题
+function resolvePromise(promise2, x, resolve, reject) {
+  if (x === promise2) {
+    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'));
+  }
+
+  if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
+    try {
+      let then = x.then;
+      if (typeof then === 'function') {
+        // x 也是一个 Promise 或有 then 方法的对象
+        then.call(x, y => {
+          if (x === y) {
+            return reject(new TypeError('Chaining cycle detected for promise #<Promise>'));
+          }
+          resolvePromise(promise2, y, resolve, reject);
+        }, reject);
+      } else {
+        // x 是一个普通对象或函数
+        resolve(x);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  } else {
+    // x 是非Promise的普通值
+    resolve(x);
+  }
+}
+
+// 示例使用
+const myPromise = new MyPromise((resolve, reject) => {
+  setTimeout(() => resolve('Success!'), 1000);
+});
+
+myPromise.then(value => {
+  console.log(value); // 输出: Success!
+}).catch(reason => console.error(reason));
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+      }
+    </style>
+</head>
+<body>
+    <div></div>
+    <script>
+//         //节流保证函数在规定时间内执行一次 重复触发只一次生效  ajax请求
+//         function ajax(value){
+//     console.log("ajax request: " + value + ", time: " + new Date());
+//   }
+
+  function throttle(func,delay){
+
+    let timer;
+    return function(){
+        if(!timer){
+         timer=setTimeout(()=>{
+          func.call(this,arguments);
+          clearTimeout(timer); //延迟时间后清空
+            },delay)
+        }
+    }
+  }
+//   let throttleAjax = throttle(ajax,500);
+//   let input=document.querySelector('input')
+//   input.addEventListener('keyup',function(e){
+//     throttleAjax(e)
+//   }
+    
+// )
+
+let div=document.querySelector('div')
+  // 当鼠标点击div按着不松时触发事件
+  div.onmousedown = function (e) {
+        var offsetx = e.offsetX;
+        var offsety = e.offsetY;
+        // 设置节流开关
+        var timer = true;
+        // 当鼠标在dom上移动时触发事件
+        document.onmousemove = function (e) {
+          // 判断节流开关是否为true
+          if (timer) {
+            // 先把节流开关给关闭
+            timer = false;
+            div.style.left = e.clientX - offsetx + "px";
+            div.style.top = e.clientY - offsety + "px";
+            setTimeout(function () {
+             timer = true;
+            }, 1000);
+          }
+        };
+      };
+ 
+  
+      div.onmouseup = function () {
+        document.onmousemove = null;
+      };
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let obj={name:'ikun'}
+    let arr=['ikun']
+    //1.
+    console.log(Array.isArray(obj));
+    console.log(Array.isArray(arr));
+    //2、xxx instanceof () 
+    console.log(obj instanceof Array);
+    console.log(arr instanceof Array);
+    //3.
+    console.log(obj.constructor);
+    //4
+    console.log(Object.prototype.toString.call(obj));
+    let a=0
+    console.log(Boolean(a));
+</script>
+</html>

@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //tasks 是数据库中的数据文件   text是input输入的文本
+          function filterItems(tasks, text) {
+     let task = text.toLowerCase(); //看数据库中文件
+    let searchTask= tasks.filter(item =>             
+          item.title.split(' ').some(word =>          
+            word.toLowerCase().startsWith(task)   
+          )
+        )
+    }
+//item.split(''),按照空格成单词数组
+//.some() 检测数组中是否有元素满足提供的测试函数
+//startsWith(  )开头是否和输入的文本匹配
+    </script>
+</body>
+</html>

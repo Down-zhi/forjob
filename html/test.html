@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+  width: 0;
+  height: 0;
+  border-width: 20px;
+  border-style: solid;
+  border-color: red transparent red transparent;
+  /* 顺时针旋转度数 */
+transform: rotate(20deg);  
+/* 倾斜  */
+ transform: skew(150deg, -10deg);
+ /* 位移 */
+ transform: translate(20px, 20px);
+ /* transform: scale(.5); */
+ /* @keyframes anim-1 {50% {border-radius: 50%;}} animation: anim-1 1s; */
+}
+.box {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background-color: #f00; /* 红色背景以便观察 */
+    text-align: center; /* 让文本居中 */
+    line-height: 100px; /* 文本垂直居中 */
+  }
+</style>
+</head>
+<body>
+    <h1>2112</h1>
+ <div id="box"></div>
+ <div class="box">Box 1</div>
+<div class="box">Box 2</div>
+<div class="box">Box 3</div>
+<script>
+    
+
+    // console.log(a) ;
+    // // var a=10;
+    // console.log(a);
+    let c = { greeting: 'Hey!' }
+let d
+
+d = c
+d.greeting = 'Hello'
+console.log(c.greeting)
+let a = {
+    value: 1
+}
+function getValue(name, age) {
+    console.log(name)
+    console.log(age)
+    console.log(this.value)
+}
+getValue.call(a, '张三', '24')
+getValue.apply(a, ['张三', '24'])
+</script>
+</body>
+</html>

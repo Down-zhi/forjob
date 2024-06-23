@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //利用indexOf去重 
+        //遍历数组的每一个元素 如果在新数组中没有出现过 就把它添加到新数组
+        const unique=(arr)=>{
+            let res=[];
+            arr.forEach(element => {
+                if(res.indexOf(element)===-1){
+                    res.push(element)
+                    //或者 if（!res.includes(item)）
+                }
+            });
+        }
+     //2.return new Set(arr)
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>图片懒加载示例</title>
+<style>
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function loadImage(img) {
+    img.src = img.dataset.src; // 将data-src的值赋给src属性，开始加载图片
+  }
+
+  function checkImagePosition() {
+    var images = document.querySelectorAll('.lazy-img');
+    for (var i = 0; i < images.length; i++) {
+        var num=0;
+      var windowHeight = window.innerHeight;
+      var imageTop = images[i].getBoundingClientRect().top;
+      if (imageTop <= windowHeight + 200) { 
+        loadImage(images[i]);
+        num++
+      }
+      if (num === images.length) {
+        document.removeEventListener('scroll', lazyLoad)
+                        }
+    }
+  }
+
+  window.addEventListener('scroll', checkImagePosition);
+});
+</script>
+</html>

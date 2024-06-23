@@ -1,0 +1,43 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex; /* 使用Flex布局 */
+    min-height: 100vh; /*设置满屏*/
+    
+  }
+  
+  .sidebar {
+    width: 20%; /* 或者可以用flex-basis替代，根据需要调整宽度 */
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  .content {
+    flex-grow: 1; /* 内容区域自适应剩余空间 */
+    padding: 20px;
+  }
+  
+  /* 响应式设计， */
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column; 
+    }
+    
+    .sidebar, .content {
+      width: 100%; /* 在小屏幕上使两个区域宽度为100% */
+    }
+    .sidebar ul {
+        display: flex;
+        /* flex-wrap: nowrap; 防止列表项换行 */
+        justify-content: space-around; 
+      }
+  }

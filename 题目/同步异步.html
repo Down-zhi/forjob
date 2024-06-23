@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //同步，按顺序执行，需要等待上一个代码执行完毕后才执行后续 ，会阻塞
+        console.log('Start');
+function syncTask() {
+    let sum = 0;
+    for (let i = 0; i < 1000000000; i++) {
+        sum += i;
+    }
+    console.log('Sync Task Finished'+sum);
+}
+syncTask();
+console.log('End');
+//异步，允许在不阻塞主线程的情况下 ，执行其他代码。异步操作完成后会通过回调通知
+//1.回调函数实现异步  不会阻塞后续代码执行  （当多个回调，代码不可维护）
+console.log('异步Start');
+function asyncTask(callback) {
+    setTimeout(function() {
+        console.log('Async Task Finished');
+        callback();
+    }, 2000);
+}
+
+asyncTask(function() {
+    console.log('Callback executed');
+});
+
+console.log('End');
+//2.promise解决回调地狱
+let promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        if (true) {
+            resolve({name: '张三'})
+        }else {
+            reject('失败了') 
+        } 
+    }, 2000);
+});
+promise.then(result => console.log(result))// {name: '张三'})
+       .catch(error => console.log(error)); // 失败了)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta  charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father {
+        height: 400px ;
+        background-color: pink;
+        /* display : flex ; */
+        }
+        .left {
+            float: left;
+        width : 200px ;
+        height: 300px ;
+        background-color : yellow;
+        }
+        .right {
+            float: right;
+        width : 200px ;
+        height: 300px ;
+        background-color : yellow;
+        }
+        .center {
+        /* flex : 1 ; */
+        overflow: hidden;
+        background-color: blue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .up{
+            width: 0;
+            height: 0;
+            border-width: 40px 40px 40px;
+            border-style: solid;
+            border-color:transparent transparent pink;
+        }
+        </style>
+</head>
+<body>
+    <div class="father">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="center">1</div>
+        <div class="center">1</div>
+        </div>
+        <div class="up"></div>
+       
+</body>
+</html>

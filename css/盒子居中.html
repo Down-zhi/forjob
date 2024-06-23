@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .paren {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        .child {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+            position: absolute;
+            /* top: 50%;
+        left:50%;
+        margin-top: -50px ;
+        margin-left: -50px ; */
+            margin: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .paren1 {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .child1 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+            display: inline-block;
+        }
+
+        .paren2 {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            /* 水平 */
+            align-items: center;
+        }
+
+        .child2 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+        }
+
+        .paren3 {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        .child3 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .paren4{
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            display: grid;
+            place-items: center;
+        }
+        .child4{
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="paren">
+        <div class="child">知道具体宽高利用定位</div>
+    </div>
+    <div class="paren1">
+        <div class="child1">table-cell</div>
+    </div>
+    <div class="paren2">
+        <div class="child2">flex布局</div>
+    </div>
+    <div class="paren3">
+        <div class="child3">利用tranform</div>
+    </div>
+    <div class="paren4">
+        <div class="child4">网格grid</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="content"></div>
+    <script>
+ let getJSON= function (url) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);                                         //XHR对象的open方法,可以设置请求的方法
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.responseType = 'json'; 
+        xhr.onload = function() {
+         if (xhr.readyState == 4) {
+            if (xhr.status === 200) {
+                resolve(xhr.response);                            // 请求成功，解析后的数据作为resolve的参数
+            } else {
+                reject(new Error(`Request failed with status ${xhr.status}`)); // 请求失败，抛出错误
+            }
+         }
+        };
+        xhr.onerror = function() {
+            reject(new Error('Network request failed')); // 网络请求失败，抛出错误
+        };
+        xhr.send(); // 发送请求
+    });   
+}
+getJSON('https://api.xygeng.cn/one')
+                .then(data => {
+                    const contentDiv = document.querySelector('.content');
+                    contentDiv.innerHTML = '';
+                    // 创建并设置新的内容
+                    let contentHtml = `
+              <h2>ID: ${data.data.id}</h2>
+              <p>Tag: ${data.data.tag}</p>
+              <p>NAME: ${data.data.name}</p>
+              <p>ORIGIN: ${data.data.origin}</p>
+              <p>Content: ${data.data.content}</p>`;
+                    // 将新内容添加到div中
+                    contentDiv.innerHTML = contentHtml;
+                    return data;
+                }).catch(err => {
+                    console.error('An error occurred:', err);
+                });
+    </script>
+</body>
+</html>

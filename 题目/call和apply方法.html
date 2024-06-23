@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //两者都可以改变this，主要区别在于参数传递方式
+        //原理将目标函数 绑定到给定的（传入的）上下文对象上作为一个临时属性方法去执行
+        // func.call(thisArg, arg1, arg2) //第一个参数是要设置为this的值（要改变this的对象），后面是传递给函数的具体参数
+        function greet(name, greeting) {
+  console.log(`${greeting}, ${name}!`);
+}
+
+const person = { name: "Alice" };
+greet(person.name,'你好')      //你好 Alice
+greet.call(person, "Bob", "Hello"); //Hello Bob
+
+Function.prototype.myCall = function(context = window, ...args) {
+  // 如果传入的上下文为null或undefined，将其替换为全局对象（浏览器环境下为window）
+  if (context === null || context === undefined) {
+    context = window;
+  }
+  // 将目标函数绑定到context上作为一个临时属性，这里使用一个唯一的Symbol作为属性名以避免冲突
+  const uniqueKey = Symbol();
+  context[uniqueKey] = this;
+  // 执行context上的临时方法，并传递args数组中的参数
+  const result = context[uniqueKey](...args);
+  // 删除临时添加的属性，以清理上下文
+  delete context[uniqueKey];
+
+  // 返回执行结果
+  return result;
+};
+Function.prototype.myApply = function(context = window, args) {  //参数必须是数组
+  if (!Array.isArray(args)) {
+    throw new TypeError(' arguments must be an array');
+  }
+  return this.myCall(context, ...args); 
+};
+    </script>
+</body>
+</html>

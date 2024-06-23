@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let arr=[1,2,3]
+    let obj=arr.join()//{1,2,3}
+    let reversearr=arr.reverse()//[3,2,1] 也直接改变arr的值
+    let deletearr=delete arr[0] //长度不变 arr【0】为未定义
+    console.log('arr---------',arr);
+    console.log(obj);
+    console.log('rearr-----',reversearr);
+    console.log(deletearr);
+    console.log(arr[0]);
+
+ let  arr1=[1,true,{},"a",2,3] 
+console.log(arr1.shift()); //去掉第一个 返回最前的 长度减一
+console.log(arr1);//[true,{},"a",2,3]
+
+
+ arr1.unshift('ikun') //在数组最前加入
+ arr1.push('jiji') //最后加入
+ console.log(arr1);
+ let arr2 = arr.concat(arr1);  //连接
+ console.log(arr2);
+ let arr3=arr2.slice(2,4)   
+ console.log(arr3); //返回的是删除的元素
+ console.log(arr2);
+
+ Array.prototype.del=function(n){
+if( n>0){
+    return  this.slice(0,n).concat(this.slice(n+1,this.length))
+}
+ }
+ var test=new Array(0,1,2,3,4,5);
+test=test.del(3);//从0算起，这里也就是删除第4项。
+console.log(test) //0,1,2,4,5
+
+var sort=[3,4,1,5,9,6]
+console.log(sort.sort());
+const a=[1,2,3,4,5]
+console.log(a.toLocaleString( ));
+console.log(a.toString( ));
+var date1 = new Date(2021, 0, 1);
+var date2 = new Date(2022, 0, 1);
+var dates = [date1, date2];
+console.log(dates.toLocaleString()); // 输出: 2021-1-1, 2022-1-1
+console.log(dates.toString()); // 输出: Fri Jan 01 2021 00:00:00 GMT+0800 (中国标准时间),Sat Jan 01 2022 00:00:00 GMT+0800 (中国标准时间)
+
+a.forEach(function(item , index) {
+// 遍历数组的所有元素
+console.log(index , item);
+}) ;
+var x = a.every(function(item) {
+return item < 9
+})
+console.log(x);         //是否全部满足条件 返回布尔值
+
+var map = a.map(function(item , index) {
+return '<b>' + item + '</br>' ;
+})
+console.log(map) ;
+
+console.log(x. toString());  //布尔值转换成字符串
+x.valueOf()
+
+var timer = new Date(2015+100 ,4 ,25,10,20,0)//Sat May 25 2115 10:20:00 GMT+0800
+console.log(timer);
+
+const add=(x)=>{
+  return x+=1
+}
+document.write(add.toString()); 
+console.log(add.toString);
+let y=100
+console.log(y.valueOf);
+console.log(Math.random());
+</script>
+</html>
