@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // new 的原理是 创建对象 ，对象链接到函数的原型 ，函数的this指向对象，返回新对象如果没有就返回这个对象
+        function New(Constructor,...args){
+    let obj={};
+    obj._proto_=Constructor.prototype;
+    const result = Constructor.apply(obj, args);
+ return typeof result === 'object' && result !== null ? result : obj;
+        }
+    
+    </script>
+</body>
+</html>

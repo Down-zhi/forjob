@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // jsop可以解决跨域问题
+function myJsonp(api, callbackName, success, fail) {
+    let scriptEle = document.createElement('script');
+    scriptEle.src = `${api}?callbackName=${callbackName}`;
+    document.body.appendChild(scriptEle);
+    window[callbackName] = function(response) {
+        success && success(response);
+        document.body.removeChild(scriptEle);
+    }
+    
+}
+
+
+    </script>
+</body>
+</html>
