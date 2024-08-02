@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         //虽然也是普通方法但是可以在值上调用，而不是传入两个值来比较
+        //在字符串上定义一个方法  查看是否包含另一个字符串,有返回ture和第一次出现的位置
+        String.prototype.isContain=function(str){
+            let res=[this.includes(str),this.indexOf(str)]
+            let resobj={'是否包含':this.includes(str), '首次出现的下标':this.indexOf(str)}
+           return  resobj
+
+        }
+        let x='nb 666 3'
+        console.log(x.isContain('b'));
+        // console.log(x.indexOf('a'));
+    </script>
+</body>
+</html>

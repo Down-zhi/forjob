@@ -1,24 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
         //利用indexOf去重 
         //遍历数组的每一个元素 如果在新数组中没有出现过 就把它添加到新数组
-        const unique=(arr)=>{
-            let res=[];
+        const unique = (arr) => {
+            let res = [];
             arr.forEach(element => {
-                if(res.indexOf(element)===-1){
+                if (res.indexOf(element) === -1) {
                     res.push(element)
                     //或者 if（!res.includes(item)）
                 }
             });
         }
-     //2.return new Set(arr)
+        //2.return new Set(arr)
+
+        //对象数组去重   参数 数组和一个属性   通过判断是否有这个属性来计算去重
+
+        //      function uniqueArr1(arr, property) {
+        //   return arr.filter(item => {                
+        //     const key = item[property];
+        //     if (arr.find(obj => obj[property] === key)) {   //find 返回找到的第一个值 错1
+        //     let index=arr.indexOf(key)                      //只能找值 错2
+        //     arr.splice(index,1)
+        //     } else {
+
+        //       return true;
+        //     }
+        // })
+
+        // }
+
+        //方法1
+        function uniqueArr(arr, property) {
+            const seen = new Set();
+            return arr.filter(item => {
+                const key = item[property];
+                if (seen.has(key)) {
+                    return false;
+                } else {
+                    seen.add(key);
+                    return true;
+                }
+            });
+        }
+        // 方法2
+            function uniqueArrReduce(arr, property) {
+                return arr.reduce((acc, item) => {
+                    const key = item[property];
+                    if (!acc.find(obj => obj[property] === key)) {
+                        acc.push(item);
+                    }
+                    return acc;
+                }, []); //从数组的第一个元素开始迭代，并使用一个空数组作为累积器的初始状态。 如果不给初始值会默认第一个元素
+            }
+        const items = [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' },
+            { id: 3, name: 'Charlie' },
+            { id: 1, name: 'Alice' }, // 重复
+            { id: 4, name: 'David' }
+        ];
+
+        const x = uniqueArr(items, 'id');
+        console.log(x);
+        console.log(uniqueArrReduce(items, 'id'));
     </script>
 </body>
+
 </html>

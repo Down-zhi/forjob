@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>输入一个字符串，输出字符串中字符的所有不重复的排列组合。</h2>
+    <script>
+///思路:两次for 循环第一次遍历随机一个，里面的for遍历剩下的
+function combination(str){
+     if (str.length===1){
+        return [str];
+     }
+     let result=[];
+     for(let i=0; i<str.length;i++){
+    const currentChar=str[i];
+    const subStr = str.slice(0, i) + str.slice(i + 1);//slice(开始,结束) : 提取从指定的开始位置和结束位置的字符串的内容
+    const remain = combination(subStr);              //嵌套在剩下取得的字符串内在用一次
+
+    for (let j=0; j<remain.length;j++){
+        result.push(currentChar+remain[j]);
+    }
+     }
+       return result;
+        }
+        console.log(combination('Abcd'))
+    </script>
+</body>
+</html>
