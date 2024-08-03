@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Promise.all 用来处理多个并发请求，也是为了页面数据构造的方便
+        //按照顺序返回结果
+
+        const PromiseAll = (Promises) => {
+            return new Promise((resolve, reject) => {
+                if (!Array.isArray(Promises)) {
+                    throw new TypeError('参数必须是数组')
+                }
+                let resnum = 0, result = [];
+                for (let i = 0; i < Promises.length; i++) {
+                    Promise.resolve(Promises[i]).then(value => {
+                        resnum++;
+                        result[i] = value;
+                        // 要等全部resolve完才返回要不会刚解析一个就返回会出错
+                        if(resnum===Promises.length){
+                            return resolve (result)
+                        }
+                  
+                        
+                    }), error => { return reject(error) }
+                   
+                }
+                 
+            })
+        }
+
+        // 不同的任务交给不同的处理，同时在执行 所以才不会按顺序等待定时器的时间。
+
+
+
+        // 理解有误，不是同时执行，是因为All不会影响每个 Promise 的内部执行流程。
+        // 每个 Promise 都会根据其内部的异步操作（如 setTimeout）独立地运行。
+        let p1 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+              
+                reject('error')  //一个有错就不能返回
+            }, 100)
+        })
+        let p2 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('2执行完')
+            }, 2000)
+        })
+        let p3 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve(3)
+            }, 3000)
+        })
+    
+        PromiseAll([p3,p2,p1]).then(res => {
+            console.log(res)
+        })
+
+    </script>
+</body>
+
+</html>

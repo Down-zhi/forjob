@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        const Times = (str) => {
+            const chars = str.split('').reduce((pre, next) => {
+                pre[next] ? (pre[next]++) : (pre[next] = 1)
+                return pre
+
+            }, {})  //初始值是一个空对象 然后进行累加
+
+            let maxElement=null;
+            let maxCount = 0;
+            for (const element in chars) {
+                if (chars[element] > maxCount) {
+                    maxElement = element
+                    maxCount = chars[element]
+                }
+            }
+            return[chars,`出现最多的是'${maxElement}',共出现${maxCount}次`]
+        }
+
+
+
+
+        console.log(Times('dasdfsdfdsfsdfsdfsdfgg-----。。。。，，,,,,,,,,,,,，???'));
+
+
+
+    </script>
+</body>
+
+</html>
