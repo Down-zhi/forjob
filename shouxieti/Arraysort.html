@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
-    let arr=[3,6,8,56,43,23,70,43]
-    const arrsort=(arr)=>{
-
-let len = arr.length;
-  for (let i = 0; i < len - 1; i++) {
-    for (let j = 0; j < len - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
-        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+  let arr = [3, 6, 8, 56, 43, 23, 70, 43,-1,2]
+  const arrsort = (arr) => {
+    let len = arr.length;
+    for (let i = 0; i < len - 1; i++) {
+      for (let j = 0; j < len - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        }
       }
     }
+    return arr;
+
   }
-  return arr;
 
+  console.log(arrsort(arr));
+
+  //选择每次从第一层循环的第一个和后面的依此比较，最小的排在最前面。
+const selectSort=(arr)=> {
+    for(let i = 0; i < arr.length; i++) {
+        let min = i;
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[min]) {
+                min = j;
+            }
+        };
+        arr[i] = arr[min];
+ 
+        
+    }
+    return arr;
 }
+console.log(selectSort(arr));
 
-console.log(arrsort(arr));
+
 </script>
+
 </html>
