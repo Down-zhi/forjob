@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //------------------------------ 数组去重---------------------------------
+
+        //方法1 Set保存唯一的值
+        const newarr = (arr) => {
+            return new Set(arr)
+        }
+        console.log(newarr([1, 2, 3, 12, 1, 2]));
+        //方法2 indexOf
+        const unique = (arr) => {
+            let res = [];
+            arr.forEach(item => {
+                if (res.indexOf(item) === -1) {
+                    res.push(item)
+                }
+            });
+            return res
+        }
+        console.log(unique([1, 2, 3, 12, 1, 2]));
+        //方法3 数组对象的去重 ,过滤的方式 ，Set的has方法和add方法
+        const uniqueArrSet = (arr, property) => {
+            const seen = new Set();
+            return arr.filter(item => {
+                let key = item[property]
+                if (seen.has(key)) {
+                    return false
+                } else {
+                    seen.add(key)
+                    return true
+                }
+            })
+        }
+        console.log(uniqueArrSet([
+            { id: 1, name: 'Alice' },
+            { id: 1, name: 'Bob' },
+            { id: 2, name: 'Bob' },
+            { id: 3, name: 'Charlie' },
+            { id: 1, name: 'Alice' },
+            { id: 4, name: 'David' }
+        ], 'id'));
+        //方法4数组对象的去重 reduce的累加器的使用
+        const uniqueArrReduce = (arr, property) => {
+            return arr.reduce((pus, item) => {
+                let key = item[property]
+                if (!pus.find(obj => obj[property] === key)) {
+                    pus.push(item)
+                }
+                return pus
+            }, [])
+        }
+        console.log(uniqueArrReduce([
+            { id: 1, name: 'Alice' },
+            { id: 1, name: 'Bob' },
+            { id: 2, name: 'Bob' },
+            { id: 3, name: 'Charlie' },
+            { id: 1, name: 'Alice' },
+            { id: 4, name: 'David' }
+        ], 'id'));
+
+
+        //--------------------------------字符串的所以不重复排列组合----------------
+        const uniqueStr = (str) => {
+            if (str.length === 1) {
+                return [str];
+            }
+            let res = []
+            for (let i = 0; i < str.length; i++) {
+                const head = str[i];
+                const remain = str.slice(0, i) + str.slice(i + 1);    //不要i
+                const body = uniqueStr(remain);
+                for (let j = 0; j < body.length; j++) {
+                    res.push(head + body[j])
+                }
+            }
+            return res
+        }
+        console.log(uniqueStr('abc'));
+        //-------------------------------数组排序------------------------
+        //方法1  冒泡
+        const BubblingSort = (arr) => {
+            for (let i = 0; i < arr.length - 1; i++) {
+                for (let j = 0; j < arr.length - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+                    }
+                }
+            }
+            return arr
+        }
+        console.log(BubblingSort([1, 2, 11, 67, 3, 97, 17]));
+
+        //方法2 选择排序   
+        const selectSort = (arr) => {
+            for (let i = 0; i < arr.length; i++) {
+                let min = i
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (arr[j] < arr[min]) {
+                        min = j
+
+                    }
+                }
+                // 把小的换前面来
+                let temp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = temp;
+            }
+            return arr
+        }
+        console.log(selectSort([1, 2, 11, 67, 3, 97, 17]));
+        //方法3 每次找最小的放在新数组中 
+        const Minsort = (arr) => {
+            let res = []
+            while (arr.length > 0) {
+                const min = Math.min(...arr);
+                res.push(min)
+                const index = arr.indexOf(min)
+                arr.splice(index, 1)
+            }
+            return res
+
+        }
+        console.log(Minsort([1, 2, 11, 67, 3, 97, 17, 2]));
+        //方法4 字符串数组的排序 ，版本号排序 
+        const compareV = (v1, v2) => {
+            let arr1 = v1.split('.').map(Number) //关键因为比较的是数字大小，不是字符串的
+            let arr2 = v2.split('.').map(Number)
+
+            let maxLength = Math.max(arr1.length, arr2.length)
+            //不够补零
+            while (arr1.length < maxLength) arr1.push(0);
+            while (arr1.length < maxLength) arr1.push(0);
+            for (let i = 0; i < maxLength; i++) {
+                if (arr1[i] < arr2[i]) {
+                    return 1
+                }
+                if (arr1[i] > arr2[i]) {
+                    return -1
+                }
+
+            }
+        }
+        const Versionsort = (arr) => {
+            let len = arr.length;
+            for (let i = 0; i < len - 1; i++) {
+                for (let j = 0; j < len - 1; j++) {
+                    if (compareV(arr[j], arr[j + 1]) === -1) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                    }
+                }
+            }
+            return arr;
+
+        }
+        console.log(Versionsort(['0.1', '0.11', '0.1.1', '0.5', '0.5']));
+        //------------------------字符出现个数统计和输出那个出现的多------------------------
+        //字符串转换成数组用数组的方法
+        const Times = (str) => {
+            const arr = str.split('').reduce((pus, item) => {
+                pus[item] ? pus[item]++ : pus[item] = 1
+                return pus
+            }, {})
+            let max = null;
+            let count = 0
+            for (const item in arr) {
+                if (arr[item] > count) {
+                    max = item
+                    count = arr[item]
+                }
+            }
+            return [arr, `出现最多的是'${max}',共出现${count}次`]
+        }
+        console.log(Times('1234567890----123123sdfsdagsdg'));
+        //-----------------------instanceof---------------------------------------
+        const _instanceof = (obj, type) => {
+            if (typeof (obj) !== 'object' || obj == null) return false
+            let proto = Object.getPrototypeOf(obj)
+            while (proto) {
+                if (proto == type.prototype) return true
+                proto = Object.getPrototypeOf(proto)
+            }
+        }
+        console.log(_instanceof({}, Object));
+        // -----------------------------call  方法-------------------------------
+        Function.prototype.selfcall =function (context, ...args) {
+            context || (context = window)
+            // 将函数绑定到 context 上
+            context.fn = this;
+            const result = context.fn(...args);
+            delete context.fn;
+            return result;
+        }
+        const person = {
+            firstName: 'John',
+            fullName: function (arg) {
+                return this.firstName + arg
+            }
+        };
+        const anotherPerson = {
+            firstName: 'Jane',
+            lastName: 'Smith'
+        };
+        console.log(person.fullName.selfcall(anotherPerson, anotherPerson.lastName)); 
+        
+    </script>
+</body>
+
+</html>

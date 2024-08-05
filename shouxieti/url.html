@@ -21,24 +21,42 @@
             var inputValue = input.value
             const parsedUrl = new URL(inputValue)
             p.textContent = `Protocol: ${parsedUrl.protocol}, Hostname: ${parsedUrl.hostname}, Pathname: ${parsedUrl.pathname}`
-          //可解析协议名等等一些参数
+            //可解析协议名等等一些参数
             console.log(parsedUrl);
 
+            //方法1 计算出查询字符串的key value 
+            function decodeQueryString(queryString) {
+                // 解析查询字符串
+                const params = new URLSearchParams(queryString);
+                // 遍历查询参数并解码
+                const decodedParams = {};
+                for (const [key, value] of params.entries()) {       //entries() 方法返回一个迭代器，这个迭代器可以用来获取键值对。
+                    decodedParams[key] = decodeURIComponent(value);
+                }
 
-     //可解析普通的查询参数，key value
+                return decodedParams;
+            }
+
+
+            //方法2 用原生方法解析普通的查询参数，key value
             const Parse = (str) => {
                 let params = {}
                 const queryStr = str.substring(1);
+                //用URLSearchParams
+                console.log(decodeQueryString(queryStr));
+                
                 const queryArr = queryStr.split('&');
                 for (let i = 0; i < queryArr.length; i++) {
                     let key = queryArr[i].split('=')
-                    params[i] = key
+                    params[i] =[key[0],decodeURIComponent(key[1])]
                 }
-                return [params]
+                return params
+                
+        
 
             }
             console.log(Parse(parsedUrl.search));
-            
+      
         }
 
     </script>

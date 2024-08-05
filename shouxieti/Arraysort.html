@@ -11,7 +11,7 @@
 
 </body>
 <script>
-  let arr = [3, 6, 8, 56, 43, 23, 70, 43,-1,2]
+  let arr = [3, 6, 8, 56, 43, 23, 70, 43,-1,2,3,3]
   const arrsort = (arr) => {
     let len = arr.length;
     for (let i = 0; i < len - 1; i++) {
@@ -25,7 +25,7 @@
 
   }
 
-  console.log(arrsort(arr));
+  console.log(arrsort([1, 2, 11, 67, 3, 97, 17]));
 
   //选择每次从第一层循环的第一个和后面的依此比较，最小的排在最前面。
 const selectSort=(arr)=> {
@@ -42,7 +42,7 @@ const selectSort=(arr)=> {
     }
     return arr;
 }
-console.log(selectSort(arr));
+console.log(selectSort([1, 2, 11, 67, 3, 97, 17]));
 
 
 </script>
